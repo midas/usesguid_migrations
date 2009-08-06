@@ -1,0 +1,19 @@
+8
+
+dir
+358
+http://cjharrelson@subversion.assembla.com/svn/lfe/accountabilities/trunk/vendor/plugins/midas-usesguid_migrations/lib/lfe
+http://cjharrelson@subversion.assembla.com/svn/lfe
+
+
+
+2009-08-06T21:45:18.871545Z
+358
+cjharrelson
+
+
+svn:special svn:externals svn:needs-lock
+
+usesguid
+dir
+

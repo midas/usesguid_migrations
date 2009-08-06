@@ -1,0 +1,55 @@
+8
+
+dir
+358
+http://cjharrelson@subversion.assembla.com/svn/lfe/accountabilities/trunk/vendor/plugins/midas-usesguid_migrations/lib/lfe/usesguid/migrations/active_record
+http://cjharrelson@subversion.assembla.com/svn/lfe
+
+
+
+2009-08-06T21:45:18.871545Z
+358
+cjharrelson
+
+
+svn:special svn:externals svn:needs-lock
+
+connection_adapters
+dir
+
+schema.rb
+file
+
+
+
+
+2009-08-05T19:13:03.000000Z
+f0708deb5e8c2a807d15ff3befdc2cd8
+2009-08-06T21:45:18.871545Z
+358
+cjharrelson
+
+base.rb
+file
+
+
+
+
+2009-08-05T19:00:14.000000Z
+222b86968235dd51ce77dff7760afa19
+2009-08-06T21:45:18.871545Z
+358
+cjharrelson
+
+schema_dumper.rb
+file
+
+
+
+
+2009-08-06T21:19:39.000000Z
+7a9038d358dfe5906ed684881e48efad
+2009-08-06T21:45:18.871545Z
+358
+cjharrelson
+

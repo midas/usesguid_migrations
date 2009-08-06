@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/lfe/!svn/ver/358/accountabilities/trunk/vendor/plugins/midas-usesguid_migrations/lib/lfe/usesguid/migrations/active_record
+END
+schema.rb
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/lfe/!svn/ver/358/accountabilities/trunk/vendor/plugins/midas-usesguid_migrations/lib/lfe/usesguid/migrations/active_record/schema.rb
+END
+base.rb
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/lfe/!svn/ver/358/accountabilities/trunk/vendor/plugins/midas-usesguid_migrations/lib/lfe/usesguid/migrations/active_record/base.rb
+END
+schema_dumper.rb
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn/lfe/!svn/ver/358/accountabilities/trunk/vendor/plugins/midas-usesguid_migrations/lib/lfe/usesguid/migrations/active_record/schema_dumper.rb
+END

@@ -1,0 +1,31 @@
+8
+
+dir
+358
+http://cjharrelson@subversion.assembla.com/svn/lfe/accountabilities/trunk/vendor/plugins/midas-usesguid_migrations/lib
+http://cjharrelson@subversion.assembla.com/svn/lfe
+
+
+
+2009-08-06T21:45:18.871545Z
+358
+cjharrelson
+
+
+svn:special svn:externals svn:needs-lock
+
+lfe
+dir
+
+usesguid_migrations.rb
+file
+
+
+
+
+2009-08-06T01:47:47.000000Z
+e20a328cfb86a289ee943f12f439dd56
+2009-08-06T21:45:18.871545Z
+358
+cjharrelson
+
