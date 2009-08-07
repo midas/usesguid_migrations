@@ -1,0 +1,96 @@
+= usesguid_migrations
+
+http://github.com/midas/usesguid_migrations/tree/master
+
+
+== DESCRIPTION
+
+To be used with http://github.com/BMorearty/usesguid/tree/master.  It can be a pain to explicitly declare the correct
+column types, etc. for your usesguid migrations.  For instance:
+
+  create_table :users, :id => false, :force => true do |t|
+    t.binary :id, :limit => 22, :null => false
+    ...
+    t.binary :account_id, :limit => 22, :null => false
+  end
+
+  execute "ALTER TABLE `users` MODIFY COLUMN `id` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;"
+  execute "ALTER TABLE `users` ADD PRIMARY KEY (id)"
+  execute "ALTER TABLE `users` MODIFY COLUMN `account_id` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;"
+
+In addition, this technique will fail to keep you schema.rb file correctly up to date.  The binary varchar(22) fields will actually be
+output as:
+
+  t.string   "id",         :limit => 22, :null => false
+  t.string   "account_id", :limit => 22, :null => false
+
+This will include no:
+
+  execute "ALTER TABLE `users` MODIFY COLUMN `id` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;"
+  execute "ALTER TABLE `users` ADD PRIMARY KEY (id)"
+  execute "ALTER TABLE `users` MODIFY COLUMN `account_id` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;"
+
+So you will end up getting unique id collisions due to the non-case sensitivity of the string field in MySQL without a latin1_bin
+collation.
+
+Enter usesguid_migrations.  This plugin will automatically create an id field (just as migrations currently do), but it will be of the
+type necessary for usesguid to work correctly.
+
+
+== FEATURES
+
+* Automatically generate an id field with correct typing for usesguid
+* Migration associated method for generating foreign keys with correct typing for usesguid
+* Schema dumper will create schema.rb files with the correct typing for usesguid
+
+
+== REQUIREMENTS
+
+* Rails 2.0 or above
+
+
+== USAGE
+
+Simply create a normal create table migration and an id field with correct typing for usesguid will be generated.
+
+In addition, if you would like to declare a foreign key field that needs to be of the
+correct type to use usesguid, just use the associated method:
+
+  create_table :whatevers, :force => true do |t|
+    t.associated :account
+  end
+
+This will create a field named account_id that is of the correct type for usesguid.
+
+If you need a table with a standard Rails id field just use the :guid option of the crate_table method.
+
+  create_table :users, :guid => false do |t|
+    ...
+  end
+
+If you need a table with no id at all, just use the normal :primary_key option of the create_table method and
+you will have no id field automatically generated.
+
+  create_table :users, :primary_key => false do |t|
+    ...
+  end
+
+
+== INSTALL
+
+From the plugins directory of your Rails projet:
+
+  git clone git://github.com/midas/usesguid_migrations.git
+
+
+== LICENSE
+
+Copyright (c) 2009 C. Jason Harrelson (midas)
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
