@@ -38,11 +38,6 @@ module Lfe::Usesguid::Migrations::ActiveRecord
         column_specs = columns.map do |column|
           raise StandardError, "Unknown type '#{column.sql_type}' for column '#{column.name}'" if @types[column.type].nil?
           next if column.name == pk
-          #if column.name == pk
-          #  unless guid_pk.nil? || guid_pk.empty?
-              
-          #  end
-          #end
           spec = {}
           spec[:name]      = column.name.inspect
           spec[:type]      = column.type.to_s
@@ -51,7 +46,7 @@ module Lfe::Usesguid::Migrations::ActiveRecord
           spec[:scale]     = column.scale.inspect if !column.scale.nil?
           spec[:null]      = 'false' if !column.null
           spec[:default]   = default_string(column.default) if column.has_default?
-          (spec.keys - [:name, :type]).each{ |k| spec[k].insert(0, "#{k.inspect} => ")}
+          (spec.keys - [:name, :type]).each{ |k| spec[k].insert(0, "#{k.inspect} => ") }
           spec
         end.compact
 
@@ -59,11 +54,17 @@ module Lfe::Usesguid::Migrations::ActiveRecord
           column_specs.insert( 0, { :name => "\"#{guid_pk}\"", :type => 'binary', :limit => ':limit => 22', :null => ':null => false' } )
         end
 
-        #unless guid_fks.nil? || guid_fks.empty?
-        #  guid_fks.each do |fk|
-            
-        #  end
-        #end
+        names = column_specs.map { |h| h[:name] }
+
+        unless guid_fks.nil?
+          guid_fks.each do |fk|
+            pos = names.index( "\"#{fk}\"" )
+            if pos
+              spec = column_specs[pos]
+              spec[:type] = "binary"
+            end
+          end
+        end
 
         # find all migration keys used in this table
         keys = [:name, :limit, :precision, :scale, :default, :null] & column_specs.map(&:keys).flatten
