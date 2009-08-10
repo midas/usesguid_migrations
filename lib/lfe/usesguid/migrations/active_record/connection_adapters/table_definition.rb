@@ -22,12 +22,13 @@ module Lfe::Usesguid::Migrations::ActiveRecord::ConnectionAdapters
         column( name, :binary, :limit => 22, :null => false )
       end
 
-      def associated( name )
+      def associated( name, options={} )
         name = name.to_s
         name = "#{name}_id" unless name.end_with?( "_id" )
         @associative_keys = [] if @associative_keys.nil?
-        @associative_keys << name
-        column( name, :binary, :limit => 22, :null => false )
+        options.merge!( :limit => 22 )
+        @associative_keys << OpenStruct.new( :name => name, :options => options )
+        column( name, :binary, options )
       end
     end
   end

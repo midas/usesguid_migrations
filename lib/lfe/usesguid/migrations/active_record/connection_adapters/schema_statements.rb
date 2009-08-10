@@ -28,13 +28,23 @@ module Lfe::Usesguid::Migrations::ActiveRecord::ConnectionAdapters
       execute create_sql
 
       # TODO this needs to be different for each adapter
-      execute "ALTER TABLE `#{table_name}` MODIFY COLUMN `#{table_definition.primary_key_name}` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;"
-      execute "ALTER TABLE `#{table_name}` ADD PRIMARY KEY (#{table_definition.primary_key_name})"
+      unless table_name == "schema_migrations"
+        execute "ALTER TABLE `#{table_name}` MODIFY COLUMN `#{table_definition.primary_key_name}` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;"
+        execute "ALTER TABLE `#{table_name}` ADD PRIMARY KEY (#{table_definition.primary_key_name})"
 
-      return if table_definition.associative_keys.nil?
-      
-      table_definition.associative_keys.each do |key|
-        execute "ALTER TABLE `#{table_name}` MODIFY COLUMN `#{key}` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;"
+        return if table_definition.associative_keys.nil?
+
+        table_definition.associative_keys.each do |assoc|
+          key = assoc.name
+          opts = assoc.options
+          sql = "ALTER TABLE `#{table_name}` MODIFY COLUMN `#{key}` VARCHAR(#{opts[:limit] || 22}) BINARY CHARACTER SET latin1 COLLATE latin1_bin"
+          if opts[:null]
+            sql << "NOT NULL;"
+          else
+            sql << ";"
+          end
+          execute( sql )
+        end
       end
     end
   end

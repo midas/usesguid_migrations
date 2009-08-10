@@ -60,7 +60,10 @@ correct type to use usesguid, just use the associated method:
     t.associated :account
   end
 
-This will create a field named account_id that is of the correct type for usesguid.
+This will create a field named account_id that is of the correct type for usesguid.  However, if you would like 
+for it to not be nullable you must include the :null => false option:
+
+  t.associated :account, :null => false
 
 If you need a table with a standard Rails id field just use the :guid option of the crate_table method.
 
