@@ -15,6 +15,8 @@ module Lfe::Usesguid::Migrations::ActiveRecord::ConnectionAdapters
         row[1].each do |line|
           keys << $1 if line =~ /^  [`"](.+?)[`"] varchar\(22\) character set latin1 collate latin1_bin NOT NULL?,?$/
           primary_key = $1 if line =~ /^  PRIMARY KEY  \([`"](.+?)[`"]\)$/
+          primary_key = $1 if line =~ /^  PRIMARY KEY  \([`"](.+?)[`"]\),$/
+          primary_key = $1 if line =~ /^  PRIMARY KEY  \([`"](.+?)[`"]\), $/
         end
       end
 
@@ -29,6 +31,7 @@ module Lfe::Usesguid::Migrations::ActiveRecord::ConnectionAdapters
 
       results.each do |row|
         row[1].each do |line|
+          foreign_keys << $1 if line =~ /^  [`"](.+?)[`"] varchar\(22\) character set latin1 collate latin1_bin default NULL?,?$/
           foreign_keys << $1 if line =~ /^  [`"](.+?)[`"] varchar\(22\) character set latin1 collate latin1_bin NOT NULL?,?$/
           primary_keys << $1 if line =~ /^  PRIMARY KEY  \([`"](.+?)[`"]\)$/
         end

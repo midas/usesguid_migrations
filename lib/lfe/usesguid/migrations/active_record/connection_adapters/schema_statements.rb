@@ -29,8 +29,10 @@ module Lfe::Usesguid::Migrations::ActiveRecord::ConnectionAdapters
 
       # TODO this needs to be different for each adapter
       unless table_name == "schema_migrations"
-        execute "ALTER TABLE `#{table_name}` MODIFY COLUMN `#{table_definition.primary_key_name}` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;"
-        execute "ALTER TABLE `#{table_name}` ADD PRIMARY KEY (#{table_definition.primary_key_name})"
+        unless options[:id] == false || options[:guid] == false
+          execute "ALTER TABLE `#{table_name}` MODIFY COLUMN `#{table_definition.primary_key_name}` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;"
+          execute "ALTER TABLE `#{table_name}` ADD PRIMARY KEY (#{table_definition.primary_key_name})"
+        end
 
         return if table_definition.associative_keys.nil?
 

@@ -12,22 +12,25 @@ module Lfe::Usesguid::Migrations::ActiveRecord
 
     def table_with_lfe_usesguid_migrations( table, stream )
       #table_without_lfe_usesguid_migrations( table, stream )
-      columns = @connection.columns(table)
+      columns = @connection.columns( table )
       begin
         tbl = StringIO.new
 
-        #guid_pk = @connection.primary_key_name( table )
-        #guid_fks = @connection.foreign_keys( table )
+        guid_pk = @connection.primary_key_name( table )
+        guid_fks = @connection.foreign_keys( table )
 
-        if @connection.respond_to?(:pk_and_sequence_for)
-          pk, pk_seq = @connection.pk_and_sequence_for(table)
+        if @connection.respond_to?( :pk_and_sequence_for )
+          pk, pk_seq = @connection.pk_and_sequence_for( table )
         end
         pk ||= 'id'
 
         tbl.print "  create_table #{table.inspect}"
-        if columns.detect { |c| c.name == pk }
-          if pk != 'id'
-            tbl.print %Q(, :primary_key => "#{pk}")
+        if col = columns.detect { |c| c.name == pk }
+          tbl.print %Q(, :primary_key => "#{pk}") if pk != 'id'
+          if col.type == :string
+            tbl.print ", :id => false"
+          elsif col.type == :integer
+            tbl.print ", :guid => false"
           end
         else
           tbl.print ", :id => false"
@@ -50,21 +53,21 @@ module Lfe::Usesguid::Migrations::ActiveRecord
           spec
         end.compact
 
-        #unless guid_pk.nil? || guid_pk.empty?
-        #  column_specs.insert( 0, { :name => "\"#{guid_pk}\"", :type => 'binary', :limit => ':limit => 22', :null => ':null => false' } )
-        #end
+        unless guid_pk.nil? || guid_pk.empty?
+          column_specs.insert( 0, { :name => "\"#{guid_pk}\"", :type => 'binary', :limit => ':limit => 22', :null => ':null => false' } )
+        end
 
-        #names = column_specs.map { |h| h[:name] }
+        names = column_specs.map { |h| h[:name] }
 
-        #unless guid_fks.nil?
-        #  guid_fks.each do |fk|
-        #    pos = names.index( "\"#{fk}\"" )
-        #    if pos
-        #      spec = column_specs[pos]
-        #      spec[:type] = "binary"
-        #    end
-        #  end
-        #end
+        unless guid_fks.nil?
+          guid_fks.each do |fk|
+            pos = names.index( "\"#{fk}\"" )
+            if pos
+              spec = column_specs[pos]
+              spec[:type] = "binary"
+            end
+          end
+        end
 
         # find all migration keys used in this table
         keys = [:name, :limit, :precision, :scale, :default, :null] & column_specs.map(&:keys).flatten
@@ -107,19 +110,19 @@ module Lfe::Usesguid::Migrations::ActiveRecord
     end
 
     def indexes_with_lfe_usesguid_migrations( table, stream)
-      indexes_without_lfe_usesguid_migrations( table, stream)
-      #pk = @connection.primary_key_name( table )
-      #foreign_keys = @connection.foreign_keys( table )
+      #indexes_without_lfe_usesguid_migrations( table, stream)
+      pk = @connection.primary_key_name( table )
+      foreign_keys = @connection.foreign_keys( table )
 
-      #stream.puts "  execute \"ALTER TABLE `#{table}` MODIFY COLUMN `#{pk}` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;\""
-      #stream.puts "  execute \"ALTER TABLE `#{table}` ADD PRIMARY KEY (#{pk})\""
-      #stream.puts if foreign_keys.nil? || foreign_keys.empty?
+      stream.puts "  execute \"ALTER TABLE `#{table}` MODIFY COLUMN `#{pk}` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;\""
+      stream.puts "  execute \"ALTER TABLE `#{table}` ADD PRIMARY KEY (#{pk})\""
+      stream.puts if foreign_keys.nil? || foreign_keys.empty?
 
-      #foreign_keys.each do |key|
-      #  stream.puts "  execute \"ALTER TABLE `#{table}` MODIFY COLUMN `#{key}` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;\""
-      #end
+      foreign_keys.each do |key|
+        stream.puts "  execute \"ALTER TABLE `#{table}` MODIFY COLUMN `#{key}` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;\""
+      end
 
-      #stream.puts unless foreign_keys.nil? || foreign_keys.empty?
+      stream.puts unless foreign_keys.nil? || foreign_keys.empty?
     end
   end
 end
