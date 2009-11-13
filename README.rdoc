@@ -83,6 +83,10 @@ you will have no id field automatically generated.
     ...
   end
 
+If you run into any issues with running tests or specs, it could be something strange happening in your schema.rb file.  This
+file is used to prepare the database for testing.  To override this and make migrations be used to prepare the database, copy 
+and rename the testdb.rake.txt file to {project root}/lib/tasks/testdb.rake.
+
 
 == INSTALL
 
