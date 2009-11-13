@@ -31,6 +31,7 @@ module Lfe::Usesguid::Migrations::ActiveRecord::ConnectionAdapters
       def guid( name, options={} )
         @associative_keys = [] if @associative_keys.nil?
         options.merge!( :limit => 22 )
+        options.merge!( :null => false ) unless options[:null]
         @associative_keys << OpenStruct.new( :name => name, :options => options )
         column( name, :binary, options )
       end
