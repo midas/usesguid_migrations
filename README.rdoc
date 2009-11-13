@@ -69,6 +69,7 @@ If you need a table with a standard Rails id field just use the :guid option of 
 
   create_table :users, :guid => false do |t|
     ...
+		t.references_with_guid :account # will still use a guid regardless of the :guid => false option in the create_table params above
   end
 
 If you need a table with no id at all, just use the normal :primary_key option of the create_table method and
@@ -81,9 +82,13 @@ you will have no id field automatically generated.
 
 == INSTALL
 
-From the plugins directory of your Rails projet:
+From the plugins directory of your Rails project:
 
   git clone git://github.com/midas/usesguid_migrations.git
+
+or an easier route:
+
+  script/plugin install git://github.com/midas/usesguid_migrations.git
 
 
 == LICENSE
