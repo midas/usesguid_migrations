@@ -110,7 +110,6 @@ module Lfe::Usesguid::Migrations::ActiveRecord
     end
 
     def indexes_with_lfe_usesguid_migrations( table, stream )
-      indexes_without_lfe_usesguid_migrations( table, stream )
       pk = @connection.primary_key_name( table )
       foreign_keys = @connection.foreign_keys( table )
 
@@ -123,6 +122,8 @@ module Lfe::Usesguid::Migrations::ActiveRecord
       end
 
       stream.puts unless foreign_keys.nil? || foreign_keys.empty?
+      
+      indexes_without_lfe_usesguid_migrations( table, stream )
     end
   end
 end
