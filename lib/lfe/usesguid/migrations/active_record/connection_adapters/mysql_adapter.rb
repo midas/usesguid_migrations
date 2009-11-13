@@ -34,6 +34,7 @@ module Lfe::Usesguid::Migrations::ActiveRecord::ConnectionAdapters
           foreign_keys << $1 if line =~ /^  [`"](.+?)[`"] varchar\(22\) character set latin1 collate latin1_bin default NULL?,?$/
           foreign_keys << $1 if line =~ /^  [`"](.+?)[`"] varchar\(22\) character set latin1 collate latin1_bin NOT NULL?,?$/
           primary_keys << $1 if line =~ /^  PRIMARY KEY  \([`"](.+?)[`"]\)$/
+          primary_keys << $1 if line =~ /^  PRIMARY KEY  \([`"](.+?)[`"]\),$/
         end
       end
 
