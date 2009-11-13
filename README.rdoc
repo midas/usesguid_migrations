@@ -57,13 +57,13 @@ In addition, if you would like to declare a foreign key field that needs to be o
 correct type to use usesguid, just use the associated method:
 
   create_table :whatevers, :force => true do |t|
-    t.associated :account
+    t.references_with_guid :account
   end
 
 This will create a field named account_id that is of the correct type for usesguid.  However, if you would like 
 for it to not be nullable you must include the :null => false option:
 
-  t.associated :account, :null => false
+  t.references_with_guid :account, :null => false
 
 If you need a table with a standard Rails id field just use the :guid option of the crate_table method.
 

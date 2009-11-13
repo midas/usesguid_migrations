@@ -22,7 +22,7 @@ module Lfe::Usesguid::Migrations::ActiveRecord::ConnectionAdapters
         column( name, :binary, :limit => 22, :null => false )
       end
 
-      def associated( name, options={} )
+      def references_with_guid( name, options={} )
         name = name.to_s
         name = "#{name}_id" unless name.end_with?( "_id" )
         guid( name, options )
