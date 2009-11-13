@@ -22,7 +22,7 @@ In addition, this technique will fail to keep you schema.rb file correctly up to
 output as:
 
   t.string   "id",         :limit => 22, :null => false
-  t.string   "account_id", :limit => 22, :null => false
+  t.string   "account_id", :limit => 22
 
 This will include no:
 
@@ -60,10 +60,14 @@ correct type to use usesguid, just use the associated method:
     t.references_with_guid :account
   end
 
-This will create a field named account_id that is of the correct type for usesguid.  However, if you would like 
-for it to not be nullable you must include the :null => false option:
+This will create a field named account_id that is of the correct type for usesguid.  It will also assume that the column
+is not nullable as it is more than likely a foreign key.  to Make it nullable you must use th e:null => true option:
 
-  t.references_with_guid :account, :null => false
+  t.references_with_guid :account
+
+or
+
+  t.references_with_guid :account, :null => true
 
 If you need a table with a standard Rails id field just use the :guid option of the crate_table method.
 
