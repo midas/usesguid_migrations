@@ -26,19 +26,21 @@ module Lfe::Usesguid::Migrations::ActiveRecord::ConnectionAdapters
     def foreign_keys( table_name, name=nil )
       results = execute( "SHOW CREATE TABLE `#{table_name}`", name )
 
-      foreign_keys = []
+      null_foreign_keys = []
+      not_null_foreign_keys = []
       primary_keys = []
 
       results.each do |row|
         row[1].each do |line|
-          foreign_keys << $1 if line =~ /^  [`"](.+?)[`"] varchar\(22\) character set latin1 collate latin1_bin default NULL?,?$/
-          foreign_keys << $1 if line =~ /^  [`"](.+?)[`"] varchar\(22\) character set latin1 collate latin1_bin NOT NULL?,?$/
+          null_foreign_keys << $1 if line =~ /^  [`"](.+?)[`"] varchar\(22\) character set latin1 collate latin1_bin default NULL?,?$/
+          not_null_foreign_keys << $1 if line =~ /^  [`"](.+?)[`"] varchar\(22\) character set latin1 collate latin1_bin NOT NULL?,?$/
           primary_keys << $1 if line =~ /^  PRIMARY KEY  \([`"](.+?)[`"]\)$/
           primary_keys << $1 if line =~ /^  PRIMARY KEY  \([`"](.+?)[`"]\),$/
         end
       end
 
-      foreign_keys - primary_keys
+
+      return null_foreign_keys - primary_keys, not_null_foreign_keys - primary_keys
     end
   end
 end

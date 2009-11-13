@@ -111,19 +111,23 @@ module Lfe::Usesguid::Migrations::ActiveRecord
 
     def indexes_with_lfe_usesguid_migrations( table, stream )
       pk = @connection.primary_key_name( table )
-      foreign_keys = @connection.foreign_keys( table )
+      null_foreign_keys, not_null_foreign_keys = @connection.foreign_keys( table )
 
       unless pk.nil? || pk.empty?
         stream.puts "  execute \"ALTER TABLE `#{table}` MODIFY COLUMN `#{pk}` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;\""
         stream.puts "  execute \"ALTER TABLE `#{table}` ADD PRIMARY KEY (#{pk})\""
       end
-      stream.puts if foreign_keys.nil? || foreign_keys.empty?
+      stream.puts if (null_foreign_keys.nil? || null_foreign_keys.empty?) && (not_null_foreign_keys.nil? || not_null_foreign_keys.empty?)
 
-      foreign_keys.each do |key|
+      null_foreign_keys.each do |key|
+        stream.puts "  execute \"ALTER TABLE `#{table}` MODIFY COLUMN `#{key}` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NULL;\""
+      end
+      
+      not_null_foreign_keys.each do |key|
         stream.puts "  execute \"ALTER TABLE `#{table}` MODIFY COLUMN `#{key}` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;\""
       end
 
-      stream.puts unless foreign_keys.nil? || foreign_keys.empty?
+      stream.puts unless (null_foreign_keys.nil? || null_foreign_keys.empty?) && (not_null_foreign_keys.nil? || not_null_foreign_keys.empty?)
       
       indexes_without_lfe_usesguid_migrations( table, stream )
     end
