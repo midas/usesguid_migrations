@@ -1,10 +1,10 @@
 module Lfe::Usesguid::Migrations::ActiveRecord::ConnectionAdapters
   module MysqlAdapter
-    def self.included(base)
-      base.class_eval do
-        
-      end
-    end
+    #def self.included(base)
+    #  base.class_eval do
+    #
+    #  end
+    #end
 
     def primary_key_name( table_name, name=nil )
       results = execute( "SHOW CREATE TABLE `#{table_name}`", name )

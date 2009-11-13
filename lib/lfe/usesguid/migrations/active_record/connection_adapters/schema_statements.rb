@@ -40,10 +40,10 @@ module Lfe::Usesguid::Migrations::ActiveRecord::ConnectionAdapters
           key = assoc.name
           opts = assoc.options
           sql = "ALTER TABLE `#{table_name}` MODIFY COLUMN `#{key}` VARCHAR(#{opts[:limit] || 22}) BINARY CHARACTER SET latin1 COLLATE latin1_bin"
-          if opts[:null]
-            sql << "NOT NULL;"
-          else
+          if opts[:null] || opts[:null].nil?
             sql << ";"
+          else
+            sql << " NOT NULL;"
           end
           execute( sql )
         end
