@@ -113,8 +113,10 @@ module Lfe::Usesguid::Migrations::ActiveRecord
       pk = @connection.primary_key_name( table )
       foreign_keys = @connection.foreign_keys( table )
 
-      stream.puts "  execute \"ALTER TABLE `#{table}` MODIFY COLUMN `#{pk}` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;\""
-      stream.puts "  execute \"ALTER TABLE `#{table}` ADD PRIMARY KEY (#{pk})\""
+      unless pk.nil? || pk.empty?
+        stream.puts "  execute \"ALTER TABLE `#{table}` MODIFY COLUMN `#{pk}` VARCHAR(22) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;\""
+        stream.puts "  execute \"ALTER TABLE `#{table}` ADD PRIMARY KEY (#{pk})\""
+      end
       stream.puts if foreign_keys.nil? || foreign_keys.empty?
 
       foreign_keys.each do |key|
