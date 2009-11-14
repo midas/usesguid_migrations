@@ -17,8 +17,7 @@ Gem::Specification.new do |s|
      "README.rdoc"
   ]
   s.files = [
-    ".document",
-     ".gitignore",
+    ".gitignore",
      "History.txt",
      "LICENSE",
      "README.rdoc",
@@ -32,8 +31,7 @@ Gem::Specification.new do |s|
      "lib/usesguid_migrations/active_record_extensions/schema.rb",
      "lib/usesguid_migrations/active_record_extensions/schema_dumper.rb",
      "script/console",
-     "spec/spec_helper.rb",
-     "spec/usesguid_migrations_spec.rb",
+     "testdb.rake.txt",
      "usesguid_migrations.gemspec"
   ]
   s.homepage = %q{http://github.com/midas/usesguid_migrations}
@@ -41,10 +39,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Makes your migrations work with usesguid plugin without explicitly defining the keys migrations.}
-  s.test_files = [
-    "spec/spec_helper.rb",
-     "spec/usesguid_migrations_spec.rb"
-  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
