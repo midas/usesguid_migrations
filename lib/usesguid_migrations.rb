@@ -1,15 +1,26 @@
-require 'lfe/usesguid/migrations/active_record/base'
-require 'lfe/usesguid/migrations/active_record/schema'
-require 'lfe/usesguid/migrations/active_record/schema_dumper'
-require 'lfe/usesguid/migrations/active_record/connection_adapters/mysql_adapter'
-require 'lfe/usesguid/migrations/active_record/connection_adapters/schema_statements'
-require 'lfe/usesguid/migrations/active_record/connection_adapters/table_definition'
+$:.unshift(File.dirname(__FILE__)) unless
+  $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
+  
+require 'usesguid_migrations/active_record_extensions/base'
+require 'usesguid_migrations/active_record_extensions/schema'
+require 'usesguid_migrations/active_record_extensions/schema_dumper'
+require 'usesguid_migrations/active_record_extensions/connection_adapters/mysql_adapter'
+require 'usesguid_migrations/active_record_extensions/connection_adapters/schema_statements'
+require 'usesguid_migrations/active_record_extensions/connection_adapters/table_definition'
+  
+module UsesguidMigrations
+  VERSION = '1.0.0'
+end
 
-ActiveRecord::Base.send( :include, Lfe::Usesguid::Migrations::ActiveRecord::Base ) if defined?( ActiveRecord::Base )
-ActiveRecord::Schema.send( :include, Lfe::Usesguid::Migrations::ActiveRecord::Schema ) if defined?( ActiveRecord::Schema )
-ActiveRecord::SchemaDumper.send( :include, Lfe::Usesguid::Migrations::ActiveRecord::SchemaDumper ) if defined?( ActiveRecord::SchemaDumper )
-ActiveRecord::ConnectionAdapters::SchemaStatements.send( :include, Lfe::Usesguid::Migrations::ActiveRecord::ConnectionAdapters::SchemaStatements ) if defined?( ActiveRecord::ConnectionAdapters::SchemaStatements )
-ActiveRecord::ConnectionAdapters::TableDefinition.send( :include, Lfe::Usesguid::Migrations::ActiveRecord::ConnectionAdapters::TableDefinition ) if defined?( ActiveRecord::ConnectionAdapters::TableDefinition )
+ActiveRecord::Base.send( :include, UsesguidMigrations::ActiveRecordExtensions::Base ) if defined?( ActiveRecord::Base )
+ActiveRecord::Schema.send( :include, UsesguidMigrations::ActiveRecordExtensions::Schema ) if defined?( ActiveRecord::Schema )
+ActiveRecord::SchemaDumper.send( :include, UsesguidMigrations::ActiveRecordExtensions::SchemaDumper ) if defined?( ActiveRecord::SchemaDumper )
+if defined?( ActiveRecord::ConnectionAdapters::SchemaStatements )
+  ActiveRecord::ConnectionAdapters::SchemaStatements.send( :include, UsesguidMigrations::ActiveRecordExtensions::ConnectionAdapters::SchemaStatements )
+end
+if defined?( ActiveRecord::ConnectionAdapters::TableDefinition )
+  ActiveRecord::ConnectionAdapters::TableDefinition.send( :include, UsesguidMigrations::ActiveRecordExtensions::ConnectionAdapters::TableDefinition )
+end
 if defined?( ActiveRecord::ConnectionAdapters::MysqlAdapter )
-  ActiveRecord::ConnectionAdapters::MysqlAdapter.send( :include, Lfe::Usesguid::Migrations::ActiveRecord::ConnectionAdapters::MysqlAdapter )
+  ActiveRecord::ConnectionAdapters::MysqlAdapter.send( :include, UsesguidMigrations::ActiveRecordExtensions::ConnectionAdapters::MysqlAdapter )
 end
