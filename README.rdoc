@@ -106,7 +106,7 @@ In Rails environment.rb:
 
 == DEPENDENCIES
 
-* usesguid Gem
+* usesguid Gem (http://github.com/midas/usesguid)
 
 
 == LICENSE
