@@ -43,6 +43,11 @@ type necessary for usesguid to work correctly.
 * Migration associated method for generating foreign keys with correct typing for usesguid
 * Schema dumper will create schema.rb files with the correct typing for usesguid
 
+== TODO
+
+* Add ability for the add_column and change_column methods to accept an option turning them into guids
+* Tests, tests and more tests (if anyone has any ideas of how to accomplish this please let me know, I am currently at a loss of how to 
+test something like this)
 
 == REQUIREMENTS
 
