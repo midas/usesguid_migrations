@@ -43,10 +43,12 @@ type necessary for usesguid to work correctly.
 * Migration associated method for generating foreign keys with correct typing for usesguid
 * Schema dumper will create schema.rb files with the correct typing for usesguid
 
-== TODO
+
+== TO DO
 
 * Add ability for the add_column and change_column methods to accept an option turning them into guids
 * Tests, tests and more tests (if anyone has any ideas of how to accomplish this please let me know, I am currently at a loss of how to test something like this)
+
 
 == REQUIREMENTS
 
@@ -94,13 +96,17 @@ and rename the testdb.rake.txt file to {project root}/lib/tasks/testdb.rake.
 
 == INSTALL
 
-From the plugins directory of your Rails project:
+From the command line:
 
-  git clone git://github.com/midas/usesguid_migrations.git
+  sudo gem install usesguid_migrations
 
-or an easier route:
+In Rails environment.rb:
 
-  script/plugin install git://github.com/midas/usesguid_migrations.git
+  config.gem "usesguid_migrations"
+
+== DEPENDENCIES
+
+* usesguid Gem
 
 
 == LICENSE
