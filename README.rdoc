@@ -53,6 +53,7 @@ type necessary for usesguid to work correctly.
 == REQUIREMENTS
 
 * Rails 2.0 or above
+* usesguid Gem (http://github.com/midas/usesguid)
 
 
 == USAGE
@@ -103,10 +104,6 @@ From the command line:
 In Rails environment.rb:
 
   config.gem "usesguid_migrations"
-
-== DEPENDENCIES
-
-* usesguid Gem (http://github.com/midas/usesguid)
 
 
 == LICENSE
