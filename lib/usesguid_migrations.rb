@@ -9,7 +9,7 @@ require 'usesguid_migrations/active_record_extensions/connection_adapters/schema
 require 'usesguid_migrations/active_record_extensions/connection_adapters/table_definition'
   
 module UsesguidMigrations
-  VERSION = '1.0.0'
+  VERSION = '1.0.1'
 end
 
 ActiveRecord::Base.send( :include, UsesguidMigrations::ActiveRecordExtensions::Base ) if defined?( ActiveRecord::Base )

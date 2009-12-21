@@ -1,3 +1,8 @@
-= 1.0.0 2009-11-113
+= 1.0.1 2009-12-20
+
+* Added add_column override that recognizes the :guid type
+
+
+= 1.0.0 2009-11-13
 
 * Ported from a plugin to Gem

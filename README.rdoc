@@ -41,6 +41,7 @@ type necessary for usesguid to work correctly.
 
 * Automatically generate an id field with correct typing for usesguid
 * Migration associated method for generating foreign keys with correct typing for usesguid
+* add_column method that recognizes :guid type.
 * Schema dumper will create schema.rb files with the correct typing for usesguid
 
 
@@ -93,6 +94,10 @@ you will have no id field automatically generated.
 If you run into any issues with running tests or specs, it could be something strange happening in your schema.rb file.  This
 file is used to prepare the database for testing.  To override this and make migrations be used to prepare the database, copy 
 and rename the testdb.rake.txt file to {project root}/lib/tasks/testdb.rake.
+
+In order to add a column to a table:
+
+  add_column :users, :account_id, :guid, :null => false
 
 
 == INSTALL
