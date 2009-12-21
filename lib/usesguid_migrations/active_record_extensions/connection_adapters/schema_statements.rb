@@ -6,6 +6,7 @@ module UsesguidMigrations
         def self.included( base )
           base.module_eval do
             alias_method_chain :create_table, :lfe_usesguid_migrations
+            alias_method_chain :add_column, :lfe_usesguid_migrations
           end
         end
 
@@ -53,7 +54,14 @@ module UsesguidMigrations
             end
           end
         end
-      
+
+        def add_column_with_lfe_usesguid_migrations( table_name, column_name, type, options={} )
+          return add_column_without_lfe_usesguid_migrations( table_name, column_name, type, options ) unless type.to_s == 'guid'
+
+          add_column_sql = "ALTER TABLE #{quote_table_name( table_name )} ADD #{quote_column_name( column_name )} VARCHAR(#{options[:limit] || 22}) BINARY CHARACTER SET latin1 COLLATE latin1_bin"
+          add_column_options!( add_column_sql, options )
+          execute( add_column_sql )
+        end
       end
     end
   end
