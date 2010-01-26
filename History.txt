@@ -1,3 +1,10 @@
+= 1.0.2 2010 01-26
+
+* Added SQLite support
+* Changed add_column now recognizes :guid and :guid_fk, the later automatically adding an _id to the 
+  column name, if not already done
+
+
 = 1.0.1 2009-12-20
 
 * Added add_column override that recognizes the :guid type

@@ -6,10 +6,11 @@ require 'usesguid_migrations/active_record_extensions/schema'
 require 'usesguid_migrations/active_record_extensions/schema_dumper'
 require 'usesguid_migrations/active_record_extensions/connection_adapters/mysql_adapter'
 require 'usesguid_migrations/active_record_extensions/connection_adapters/schema_statements'
+require 'usesguid_migrations/active_record_extensions/connection_adapters/sqlite_adapter'
 require 'usesguid_migrations/active_record_extensions/connection_adapters/table_definition'
   
 module UsesguidMigrations
-  VERSION = '1.0.1'
+  VERSION = '1.0.2'
 end
 
 ActiveRecord::Base.send( :include, UsesguidMigrations::ActiveRecordExtensions::Base ) if defined?( ActiveRecord::Base )
@@ -23,4 +24,7 @@ if defined?( ActiveRecord::ConnectionAdapters::TableDefinition )
 end
 if defined?( ActiveRecord::ConnectionAdapters::MysqlAdapter )
   ActiveRecord::ConnectionAdapters::MysqlAdapter.send( :include, UsesguidMigrations::ActiveRecordExtensions::ConnectionAdapters::MysqlAdapter )
+end
+if defined?( ActiveRecord::ConnectionAdapters::SQLiteAdapter )
+  ActiveRecord::ConnectionAdapters::SQLiteAdapter.send( :include, UsesguidMigrations::ActiveRecordExtensions::ConnectionAdapters::SqliteAdapter )
 end
