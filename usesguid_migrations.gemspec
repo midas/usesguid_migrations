@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{usesguid_migrations}
-  s.version = "1.0.1"
+  s.version = "1.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jason Harrelson"]
-  s.date = %q{2009-12-20}
+  s.date = %q{2010-01-26}
   s.description = %q{Makes your migrations work with usesguid plugin without explicitly defining the primary key id or foreign keys in migrations.}
   s.email = %q{jason@lookforwardenterprises.com}
   s.extra_rdoc_files = [
@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
      "lib/usesguid_migrations/active_record_extensions/base.rb",
      "lib/usesguid_migrations/active_record_extensions/connection_adapters/mysql_adapter.rb",
      "lib/usesguid_migrations/active_record_extensions/connection_adapters/schema_statements.rb",
+     "lib/usesguid_migrations/active_record_extensions/connection_adapters/sqlite_adapter.rb",
      "lib/usesguid_migrations/active_record_extensions/connection_adapters/table_definition.rb",
      "lib/usesguid_migrations/active_record_extensions/schema.rb",
      "lib/usesguid_migrations/active_record_extensions/schema_dumper.rb",

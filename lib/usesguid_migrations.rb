@@ -13,6 +13,9 @@ module UsesguidMigrations
   VERSION = '1.0.2'
 end
 
+processor, platform, *rest = RUBY_PLATFORM.split("-")
+is_windows = platform == 'mswin32'
+
 ActiveRecord::Base.send( :include, UsesguidMigrations::ActiveRecordExtensions::Base ) if defined?( ActiveRecord::Base )
 ActiveRecord::Schema.send( :include, UsesguidMigrations::ActiveRecordExtensions::Schema ) if defined?( ActiveRecord::Schema )
 ActiveRecord::SchemaDumper.send( :include, UsesguidMigrations::ActiveRecordExtensions::SchemaDumper ) if defined?( ActiveRecord::SchemaDumper )
@@ -27,4 +30,8 @@ if defined?( ActiveRecord::ConnectionAdapters::MysqlAdapter )
 end
 if defined?( ActiveRecord::ConnectionAdapters::SQLiteAdapter )
   ActiveRecord::ConnectionAdapters::SQLiteAdapter.send( :include, UsesguidMigrations::ActiveRecordExtensions::ConnectionAdapters::SqliteAdapter )
+end
+
+if is_windows
+  ActiveRecord::ConnectionAdapters::AbstractAdapter.send( :include, UsesguidMigrations::ActiveRecordExtensions::ConnectionAdapters::SqliteAdapter )
 end

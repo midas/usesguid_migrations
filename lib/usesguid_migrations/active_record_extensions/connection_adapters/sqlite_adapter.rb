@@ -3,7 +3,9 @@ module UsesguidMigrations::ActiveRecordExtensions::ConnectionAdapters
 
     def usesguid_create_table( table_name, table_definition, options )
       begin
-        execute( usesuid_create_table_statement( table_name, table_definition, options ) )
+        sql = usesuid_create_table_statement( table_name, table_definition, options )
+        sql.sub!( '"id" blob(22) NOT NULL', '"id" blob(22) PRIMARY KEY NOT NULL' )
+        execute( sql )
       rescue SQLite3::MisuseException; end
 
       unless table_name == "schema_migrations"
