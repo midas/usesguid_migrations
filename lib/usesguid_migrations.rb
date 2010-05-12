@@ -13,8 +13,9 @@ module UsesguidMigrations
   VERSION = '1.0.2'
 end
 
-processor, platform, *rest = RUBY_PLATFORM.split("-")
-is_windows = platform == 'mswin32'
+def windows?
+  !(RUBY_PLATFORM =~ /(mingw32|mswin32)/i).nil?
+end
 
 ActiveRecord::Base.send( :include, UsesguidMigrations::ActiveRecordExtensions::Base ) if defined?( ActiveRecord::Base )
 ActiveRecord::Schema.send( :include, UsesguidMigrations::ActiveRecordExtensions::Schema ) if defined?( ActiveRecord::Schema )
@@ -32,6 +33,6 @@ if defined?( ActiveRecord::ConnectionAdapters::SQLiteAdapter )
   ActiveRecord::ConnectionAdapters::SQLiteAdapter.send( :include, UsesguidMigrations::ActiveRecordExtensions::ConnectionAdapters::SqliteAdapter )
 end
 
-if is_windows
+if windows?
   ActiveRecord::ConnectionAdapters::AbstractAdapter.send( :include, UsesguidMigrations::ActiveRecordExtensions::ConnectionAdapters::SqliteAdapter )
 end
