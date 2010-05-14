@@ -10,7 +10,7 @@ require 'usesguid_migrations/active_record_extensions/connection_adapters/sqlite
 require 'usesguid_migrations/active_record_extensions/connection_adapters/table_definition'
   
 module UsesguidMigrations
-  VERSION = '1.0.2'
+  VERSION = '1.0.3'
 end
 
 def windows?
