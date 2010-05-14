@@ -2,3 +2,4 @@
 !.gitignore # except for .gitignore
 *.svn
 pkg/*
+.rake_tasks~
