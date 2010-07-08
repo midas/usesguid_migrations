@@ -102,13 +102,9 @@ In order to add a column to a table:
 
 == INSTALL
 
-From the command line:
+In your application's _Gemfile_:
 
-  sudo gem install usesguid_migrations
-
-In Rails environment.rb:
-
-  config.gem "usesguid_migrations"
+ gem 'usesguid_migrations'
 
 
 == LICENSE
